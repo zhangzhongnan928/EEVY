@@ -6,6 +6,7 @@ import './CreateEvent.css';
 
 // Import ABIs
 import EnhancedEventFactoryABI from '../contracts/EnhancedEventFactory.json';
+import ERC20ABI from '../contracts/ERC20.json';
 
 // USDC token address on Base Mainnet
 const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";

@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+/* global BigInt */
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ethers } from 'ethers';
 import './EventsList.css';
 
 // Import ABIs
-import EventFactoryABI from '../contracts/EventFactory.json';
 import EnhancedEventFactoryABI from '../contracts/EnhancedEventFactory.json';
-import EventTicketABI from '../contracts/EventTicket.json';
 
 // USDC token address on Base Mainnet
 const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
@@ -42,10 +41,10 @@ const EventsList = ({ signer, account, eventFactoryAddress, testMode }) => {
   };
 
   // Simplified ABI for EventTicket from SimplifiedEventFactory.sol
-  const SimplifiedEventTicketABI = [
+  const SimplifiedEventTicketABI = useMemo(() => [
     "function eventInfo() view returns (string name, string description, uint256 date, string venue, uint256 maxTickets, uint256 ticketsSold, uint256 price, address paymentToken, string tokenScriptURI, bool active)",
     "function owner() view returns (address)"
-  ];
+  ], []);
 
   // Hardcoded event data for fallback
   const getHardcodedEvents = () => {
@@ -148,7 +147,7 @@ const EventsList = ({ signer, account, eventFactoryAddress, testMode }) => {
         
         // Get all event addresses
         const eventAddresses = await factoryContract.getAllEvents();
-        console.log("Found events:", eventAddresses);
+        console.log(`Found ${eventAddresses.length} event addresses.`);
         
         if (eventAddresses.length === 0) {
           setEvents([]);
@@ -165,8 +164,12 @@ const EventsList = ({ signer, account, eventFactoryAddress, testMode }) => {
               provider
             );
             
+            // Fetch event information
+            console.log(`Fetching info for event at ${address}`);
             const eventInfo = await eventContract.eventInfo();
             const owner = await eventContract.owner();
+            
+            console.log(`Successfully fetched event: ${eventInfo.name}`);
             
             return {
               contractAddress: address,
@@ -183,20 +186,22 @@ const EventsList = ({ signer, account, eventFactoryAddress, testMode }) => {
               owner: owner
             };
           } catch (err) {
-            console.error(`Error fetching event details for ${address}:`, err);
+            console.error(`Error fetching event details for ${address}:`, err.message);
+            // Return null for events that fail to load
             return null;
           }
         });
         
         const eventDetails = await Promise.all(eventDetailsPromises);
         const validEvents = eventDetails.filter(event => event !== null);
+        console.log(`Successfully loaded ${validEvents.length} of ${eventAddresses.length} events`);
         
         // Sort events by date (newest first)
         validEvents.sort((a, b) => a.date - b.date);
         
         setEvents(validEvents);
       } catch (err) {
-        console.error("Error fetching events:", err);
+        console.error("Error fetching events:", err.message);
         setError("Failed to load events. Please try again later.");
         
         // Use hardcoded data as fallback in case of error
