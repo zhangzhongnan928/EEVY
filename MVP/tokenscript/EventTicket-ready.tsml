@@ -17,8 +17,8 @@
         <ts:iconUrl xml:lang="en">https://example.com/icon.png</ts:iconUrl>
     </ts:meta>
     <ts:contract interface="erc721" name="EventTicketContract">
-        <!-- Replace this with the actual event contract address once created -->
-        <ts:address network="8453">0x0000000000000000000000000000000000000000</ts:address>
+        <!-- Updated with the specific event contract address -->
+        <ts:address network="8453">0x87d807d1D0E5C842709659DA4EA8294619506Cf1</ts:address>
     </ts:contract>
     <ts:origins>
         <ts:ethereum contract="EventTicketContract"/>
