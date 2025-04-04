@@ -139,7 +139,7 @@ const CreateEvent = ({ signer, eventFactoryAddress }) => {
       console.log("Gas estimate:", gasEstimate.toString());
       
       // Add 20% buffer to gas estimate
-      const gasLimit = gasEstimate * BigInt(120) / BigInt(100);
+      const gasLimit = gasEstimate * window.BigInt(120) / window.BigInt(100);
       
       // Send transaction
       const tx = await factoryContract.createEvent(

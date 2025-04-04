@@ -297,7 +297,7 @@ const EventDetails = ({ signer, account, testMode }) => {
         signer
       );
       
-      const totalCost = event.price * BigInt(ticketQuantity);
+      const totalCost = event.price * window.BigInt(ticketQuantity);
       console.log(`Approving ${totalCost.toString()} tokens for contract ${contractAddress}`);
       
       // Approve the contract to spend tokens
@@ -349,7 +349,7 @@ const EventDetails = ({ signer, account, testMode }) => {
       
       if (event.paymentToken === ethers.ZeroAddress) {
         // If ETH payment
-        const totalCost = event.price * BigInt(ticketQuantity);
+        const totalCost = event.price * window.BigInt(ticketQuantity);
         console.log("Buying ticket with ETH, value:", totalCost.toString());
         
         // Handle each ticket purchase separately for better error handling
@@ -388,7 +388,7 @@ const EventDetails = ({ signer, account, testMode }) => {
       } else {
         // ERC20 token payment
         // Check allowance first
-        const totalCost = event.price * BigInt(ticketQuantity);
+        const totalCost = event.price * window.BigInt(ticketQuantity);
         
         if (!tokenAllowance || tokenAllowance < totalCost) {
           setError(`Please approve at least ${ethers.formatUnits(totalCost, tokenDecimals)} ${tokenSymbol} before purchasing.`);
@@ -483,8 +483,8 @@ const EventDetails = ({ signer, account, testMode }) => {
   }
   
   const isTokenPayment = event.paymentToken !== ethers.ZeroAddress;
-  const needsApproval = isTokenPayment && (!tokenAllowance || tokenAllowance < (event.price * BigInt(ticketQuantity)));
-  const insufficientBalance = isTokenPayment && tokenBalance !== null && tokenBalance < (event.price * BigInt(ticketQuantity));
+  const needsApproval = isTokenPayment && (!tokenAllowance || tokenAllowance < (event.price * window.BigInt(ticketQuantity)));
+  const insufficientBalance = isTokenPayment && tokenBalance !== null && tokenBalance < (event.price * window.BigInt(ticketQuantity));
   const displayTokenSymbol = tokenSymbol || getTokenSymbol(event.paymentToken);
   
   return (
@@ -554,8 +554,8 @@ const EventDetails = ({ signer, account, testMode }) => {
                     <span className="total-label">Total Cost:</span>
                     <span className="total-value">
                       {isTokenPayment 
-                        ? `${ethers.formatUnits(event.price * BigInt(ticketQuantity), tokenDecimals || 6)} ${displayTokenSymbol}`
-                        : `${ethers.formatEther(event.price * BigInt(ticketQuantity))} ETH`
+                        ? `${ethers.formatUnits(event.price * window.BigInt(ticketQuantity), tokenDecimals || 6)} ${displayTokenSymbol}`
+                        : `${ethers.formatEther(event.price * window.BigInt(ticketQuantity))} ETH`
                       }
                     </span>
                   </div>
