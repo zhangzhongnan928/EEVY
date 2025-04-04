@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ts:token xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
-          xmlns:xml="http://www.w3.org/XML/1998/namespace"
-          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xmlns:ethereum="urn:ethereum:constantinople"
-          name="EEVY Event Ticket - ETH Edition">
+<ts:token xmlns:ethereum="urn:ethereum:constantinople" 
+          xmlns:ts="http://tokenscript.org/2024/01/tokenscript" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          name="EEVY Event Ticket - ETH Edition"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd">
     <ts:label>
         <ts:plurals xml:lang="en">
             <ts:string quantity="one">EEVY Event Ticket</ts:string>
@@ -16,7 +15,7 @@
         <ts:aboutUrl xml:lang="en">https://eevy.xyz</ts:aboutUrl>
         <ts:iconUrl xml:lang="en">https://example.com/icon.png</ts:iconUrl>
     </ts:meta>
-    <ts:contract interface="erc721" name="EventTicketContract">
+    <ts:contract name="EventTicketContract">
         <!-- ETH Edition Event Address -->
         <ts:address network="8453">0x2460A187ddAb1Fe970F8336d4152493ae0112F81</ts:address>
     </ts:contract>
