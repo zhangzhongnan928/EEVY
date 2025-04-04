@@ -94,7 +94,7 @@ function App() {
   }, []);
   
   return (
-    <Router basename="/EEVY">
+    <Router>
       <div className="app">
         <Header 
           account={account} 
