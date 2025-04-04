@@ -1,0 +1,88 @@
+.events-list-container {
+  padding: 20px 0;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* Event Card */
+.event-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+}
+
+.event-card-header {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.event-card-header h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.event-date {
+  font-size: 14px;
+  color: #666;
+}
+
+.event-card-body {
+  flex: 1;
+  margin-bottom: 16px;
+}
+
+.event-venue {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.event-description {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.event-tickets-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.event-tickets-available {
+  color: #666;
+}
+
+.event-ticket-price {
+  font-weight: 600;
+  color: #333;
+}
+
+.event-card-footer {
+  margin-top: auto;
+}
+
+/* No events message */
+.no-events {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.no-events p {
+  margin-bottom: 20px;
+  color: #666;
+} 
