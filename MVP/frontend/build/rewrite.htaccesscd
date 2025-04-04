@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} --helpf
+RewriteCond %{REQUEST_FILENAME} --helpd
+RewriteRule . /index.html [L] /Users/victorzhang/EEVY-1
