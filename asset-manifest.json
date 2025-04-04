@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/EEVY/static/css/main.01e95cae.css",
-    "main.js": "/EEVY/static/js/main.fbd1c97e.js",
+    "main.css": "/EEVY/static/css/main.16e3b390.css",
+    "main.js": "/EEVY/static/js/main.32f663e0.js",
     "index.html": "/EEVY/index.html",
-    "main.01e95cae.css.map": "/EEVY/static/css/main.01e95cae.css.map",
-    "main.fbd1c97e.js.map": "/EEVY/static/js/main.fbd1c97e.js.map"
+    "main.16e3b390.css.map": "/EEVY/static/css/main.16e3b390.css.map",
+    "main.32f663e0.js.map": "/EEVY/static/js/main.32f663e0.js.map"
   },
   "entrypoints": [
-    "static/css/main.01e95cae.css",
-    "static/js/main.fbd1c97e.js"
+    "static/css/main.16e3b390.css",
+    "static/js/main.32f663e0.js"
   ]
 }
