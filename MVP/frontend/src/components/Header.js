@@ -1,37 +1,53 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
-const Header = ({ connectWallet, isConnected, account }) => {
-  // Function to truncate the wallet address
-  const truncateAddress = (address) => {
+const Header = ({ account, connectWallet, disconnectWallet, isConnecting }) => {
+  const formatAddress = (address) => {
+    if (!address) return '';
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
   return (
     <header className="header">
-      <div className="container header-container">
-        <div className="logo">
-          <Link to="/">
-            <h1>EEVY</h1>
+      <div className="header-content">
+        <div className="header-left">
+          <Link to="/" className="logo">
+            EEVY
           </Link>
+          <nav className="nav-links">
+            <Link to="/" className="nav-link">
+              Events
+            </Link>
+            <Link to="/create" className="nav-link">
+              Create Event
+            </Link>
+            <Link to="/my-tickets" className="nav-link">
+              My Tickets
+            </Link>
+          </nav>
         </div>
         
-        <nav className="app-nav">
-          <NavLink to="/" end>Events</NavLink>
-          <NavLink to="/create">Create Event</NavLink>
-          <NavLink to="/my-tickets">My Tickets</NavLink>
-        </nav>
-        
-        <div className="wallet-connect">
-          {isConnected ? (
-            <div className="connected-account">
-              <span className="account-address">{truncateAddress(account)}</span>
-              <div className="connection-indicator"></div>
+        <div className="header-right">
+          {account ? (
+            <div className="wallet-info">
+              <div className="account-display">
+                {formatAddress(account)}
+              </div>
+              <button 
+                className="btn btn-sm btn-outline" 
+                onClick={disconnectWallet}
+              >
+                Disconnect
+              </button>
             </div>
           ) : (
-            <button className="btn" onClick={connectWallet}>
-              Connect Wallet
+            <button 
+              className="btn btn-primary" 
+              onClick={connectWallet}
+              disabled={isConnecting}
+            >
+              {isConnecting ? 'Connecting...' : 'Connect Wallet'}
             </button>
           )}
         </div>

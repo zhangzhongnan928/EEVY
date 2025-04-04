@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ethers } from 'ethers';
 import './App.css';
 
@@ -19,83 +19,127 @@ function App() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
   const [account, setAccount] = useState(null);
-  const [isConnected, setIsConnected] = useState(false);
+  const [chainId, setChainId] = useState(null);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [testMode, setTestMode] = useState(false);
   
-  // Contract addresses
-  const eventFactoryAddress = "0x06C0203E1c1c1A0a45cA95d56Bde98c7E4a83081";
-  
-  useEffect(() => {
-    const checkIfWalletIsConnected = async () => {
-      try {
-        if (window.ethereum) {
-          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-          if (accounts.length > 0) {
-            const provider = new ethers.BrowserProvider(window.ethereum);
-            const signer = await provider.getSigner();
-            
-            setAccount(accounts[0]);
-            setProvider(provider);
-            setSigner(signer);
-            setIsConnected(true);
-          }
-        } else {
-          console.log("No Ethereum wallet detected");
-        }
-      } catch (error) {
-        console.error("Error checking wallet connection:", error);
-      }
-    };
-    
-    checkIfWalletIsConnected();
-    
-    // Listen for account changes
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', (accounts) => {
-        if (accounts.length > 0) {
-          setAccount(accounts[0]);
-          setIsConnected(true);
-        } else {
-          setAccount(null);
-          setIsConnected(false);
-        }
-      });
-    }
-  }, []);
+  // Contract addresses - Using the correct EventFactory address
+  const eventFactoryAddress = "0xc8a298f687b72d10b1dc4142ce93c55ab7fc78a8"; // Base Mainnet
   
   const connectWallet = async () => {
-    try {
-      if (window.ethereum) {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
+    if (window.ethereum) {
+      try {
+        // Request account access
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
         
-        setAccount(accounts[0]);
-        setProvider(provider);
-        setSigner(signer);
-        setIsConnected(true);
-      } else {
-        alert("Please install MetaMask or another Ethereum wallet");
+        // Refresh the provider and signer
+        const web3Provider = new ethers.BrowserProvider(window.ethereum);
+        setProvider(web3Provider);
+        
+        const userSigner = await web3Provider.getSigner();
+        setSigner(userSigner);
+        setAccount(await userSigner.getAddress());
+      } catch (error) {
+        console.error("Error connecting to wallet:", error);
       }
-    } catch (error) {
-      console.error("Error connecting wallet:", error);
+    } else {
+      alert("Please install MetaMask or another Ethereum wallet extension to use this application.");
     }
   };
+  
+  const disconnectWallet = () => {
+    setProvider(null);
+    setSigner(null);
+    setAccount(null);
+    setChainId(null);
+  };
+  
+  const toggleTestMode = () => {
+    setTestMode(!testMode);
+  };
+  
+  useEffect(() => {
+    const initWeb3 = async () => {
+      // Modern dapp browsers
+      if (window.ethereum) {
+        try {
+          const web3Provider = new ethers.BrowserProvider(window.ethereum);
+          setProvider(web3Provider);
+
+          // Request account access
+          const accounts = await web3Provider.listAccounts();
+          
+          if (accounts.length > 0) {
+            const userSigner = await web3Provider.getSigner();
+            setSigner(userSigner);
+            setAccount(await userSigner.getAddress());
+          }
+          
+          // Listen for account changes
+          window.ethereum.on('accountsChanged', async (accounts) => {
+            if (accounts.length > 0) {
+              const userSigner = await web3Provider.getSigner();
+              setSigner(userSigner);
+              setAccount(await userSigner.getAddress());
+            } else {
+              setSigner(null);
+              setAccount(null);
+            }
+          });
+          
+          // Listen for chain changes
+          window.ethereum.on('chainChanged', () => {
+            window.location.reload();
+          });
+          
+        } catch (error) {
+          console.error("User denied account access or another error occurred:", error);
+        }
+      } 
+      // If no ethereum provider
+      else {
+        console.log("No Ethereum browser extension detected, falling back to read-only mode");
+        // You can set up a read-only provider here if needed
+      }
+    };
+
+    initWeb3();
+  }, []);
   
   return (
     <Router>
       <div className="app">
         <Header 
-          connectWallet={connectWallet} 
-          isConnected={isConnected} 
           account={account} 
+          connectWallet={connectWallet} 
+          disconnectWallet={disconnectWallet}
+          isConnecting={isConnecting}
         />
         
-        <main className="container">
+        <main className="main-content">
+          {/* Test Mode Toggle */}
+          <div className="test-mode-toggle">
+            <label className="toggle-switch">
+              <input 
+                type="checkbox" 
+                checked={testMode} 
+                onChange={toggleTestMode} 
+              />
+              <span className="toggle-slider"></span>
+            </label>
+            <span className="toggle-label">Test Mode: {testMode ? 'On' : 'Off'}</span>
+            {testMode && (
+              <div className="test-mode-notice">
+                Using hardcoded data instead of blockchain calls
+              </div>
+            )}
+          </div>
+          
           <Routes>
-            <Route path="/" element={<EventsList provider={provider} eventFactoryAddress={eventFactoryAddress} />} />
-            <Route path="/event/:address" element={<EventDetails provider={provider} signer={signer} />} />
+            <Route path="/" element={<EventsList signer={signer} account={account} eventFactoryAddress={eventFactoryAddress} testMode={testMode} />} />
+            <Route path="/event/:contractAddress" element={<EventDetails signer={signer} account={account} testMode={testMode} />} />
             <Route path="/create" element={<CreateEvent signer={signer} eventFactoryAddress={eventFactoryAddress} />} />
-            <Route path="/my-tickets" element={<MyTickets provider={provider} signer={signer} account={account} />} />
+            <Route path="/my-tickets" element={<MyTickets signer={signer} account={account} testMode={testMode} />} />
           </Routes>
         </main>
         
