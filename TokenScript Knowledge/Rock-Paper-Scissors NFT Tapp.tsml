@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
+          xmlns:xml="http://www.w3.org/XML/1998/namespace"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:ethereum="urn:ethereum:constantinople"
+          name="Rock-Paper-Scissors NFT Tapp">
+    <ts:label>
+        <ts:plurals xml:lang="en">
+            <ts:string quantity="one">Rock-Paper-Scissors NFT</ts:string>
+            <ts:string quantity="other">Rock-Paper-Scissors NFTs</ts:string>
+        </ts:plurals>
+    </ts:label>
+    <ts:meta>
+        <ts:description xml:lang="en">This game is a 5-minute round of Rock-Paper-Scissors, where each match is an NFT Tapp owned by the creator (referred to as the “Owner”). The Owner can share the Tlink for this game via their Twitter, inviting their followers to play. Players participate by selecting one of the three moves: rock, paper, or scissors, with the cost of $1 per move. Additionally, players have a “Share to Earn” option, where they can share the game with their own networks.</ts:description>
+        <ts:aboutUrl xml:lang="en">Rock-Paper-Scissors.com</ts:aboutUrl>
+        <ts:iconUrl xml:lang="en">Rock-Paper-Scissors.com/icon.png</ts:iconUrl>
+    </ts:meta>
+    <ts:contract interface="erc721" name="Rock-Paper-Scissors NFT TappContract">
+        <ts:address network="8453">0xce1077C559520DA34dfa0276D34019DCa5B085e9</ts:address>
+    </ts:contract>
+    <ts:origins>
+        <ts:ethereum contract="Rock-Paper-Scissors NFT TappContract"/>
+    </ts:origins>
+    <ts:cards>
+        <ts:card type="action" name="$ Rock/Paper/Scissors">
+            <ts:label>
+                <ts:string xml:lang="en">$ Rock/Paper/Scissors</ts:string>
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <button>$ Rock/Paper/Scissors</button>
+            </ts:view>
+        </ts:card>
+        <ts:card type="action" name="Share to Earn $">
+            <ts:label>
+                <ts:string xml:lang="en">Share to Earn $</ts:string>
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <button>Share to Earn $</button>
+            </ts:view>
+        </ts:card>
+        <ts:card type="action" name="Leaderboard">
+            <ts:label>
+                <ts:string xml:lang="en">Leaderboard</ts:string>
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <button>Leaderboard</button>
+            </ts:view>
+        </ts:card></ts:cards>
+</ts:token>

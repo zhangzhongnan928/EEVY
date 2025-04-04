@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:ethereum="urn:ethereum:constantinople"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
+          name="Degen">
+    <ts:label>
+        <ts:plurals xml:lang="en">
+            <ts:string quantity="one">Degen Token</ts:string>
+            <ts:string quantity="other">Degen Tokens</ts:string>
+        </ts:plurals>
+    </ts:label>
+    <ts:meta>
+        <ts:description xml:lang="en">Degen Token - The ERC20 token for degens on Base</ts:description>
+        <ts:aboutUrl xml:lang="en">https://degen.example.com/</ts:aboutUrl>
+        <ts:iconUrl xml:lang="en">https://degen.example.com/icon.png</ts:iconUrl>
+    </ts:meta>
+
+    <ts:contract interface="erc20" name="DegenTokenContract">
+        <ts:address network="8453">0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed</ts:address>
+    </ts:contract>
+
+    <ts:origins>
+        <ts:ethereum contract="DegenTokenContract"/>
+    </ts:origins>
+
+    <!-- Buy $1 Card -->
+    <ts:card type="action" name="BuyDegen" origins="DegenTokenContract">
+        <ts:label>
+            <ts:string xml:lang="en">Buy $1 of Degen</ts:string>
+        </ts:label>
+        <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+            <style type="text/css">
+                .button { 
+                    background-color: #4CAF50;
+                    border: none;
+                    color: white;
+                    padding: 15px 32px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                }
+            </style>
+            <div>
+                <p>Click the button below to buy $1 worth of Degen tokens.</p>
+                <button class="button" onclick="buyDegen()">Buy $1 of Degen</button>
+            </div>
+            <script type="text/javascript">
+                function buyDegen() {
+                    tokenscript.action.executeTransaction({ 
+                        txName: "buyDegen",
+                        gasLimit: 300000, // Set a reasonable gas limit
+                        value: "0" // No ETH value sent directly
+                    });
+                }
+            </script>
+        </ts:view>
+    </ts:card>
+
+    <!-- Watch on CoinGecko Card -->
+    <ts:card type="action" name="WatchOnCoinGecko" origins="DegenTokenContract">
+        <ts:label>
+            <ts:string xml:lang="en">Watch on CoinGecko</ts:string>
+        </ts:label>
+        <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+            <style type="text/css">.button { /* styles */ }</style>
+            <div>
+                <button class="button" onclick="watchOnCoinGecko()">Watch on CoinGecko</button>
+            </div>
+            <script type="text/javascript">
+                function watchOnCoinGecko() {
+                    window.open('https://www.coingecko.com/en/coins/degen', '_blank');
+                }
+            </script>
+        </ts:view>
+    </ts:card>
+
+    <!-- Share Your Token Card -->
+    <ts:card type="action" name="ShareToken" origins="DegenTokenContract">
+        <ts:label>
+            <ts:string xml:lang="en">Share Your Token</ts:string>
+        </ts:label>
+        <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+            <style type="text/css">.button { /* styles */ }</style>
+            <div>
+                <button class="button" onclick="shareToken()">Share Your Token</button>
+            </div>
+            <script type="text/javascript">
+                function shareToken() {
+                    var tlink = "https://viewer.tokenscript.org/?chain=8453&amp;contract=0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed";
+                    tokenscript.share.share({ message: "Check out my Degen Token on Base!", url: tlink });
+                }
+            </script>
+        </ts:view>
+    </ts:card>
+
+    <ts:transaction name="buyDegen">
+        <ts:contract>0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD</ts:contract>
+        <ts:function>execute</ts:function>
+        <ts:parameters>
+            <ts:parameter name="data" type="bytes">0x3593564c000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000192b29ed46c00000000000000000000000000000000000000000000000000000000000000050b0905040c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000022000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000003200000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000012f54a645fa02000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000056f3f8bda4ce9000000000000000000000000000000000000000000000000000000012f54a645fa0200000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000200000000000000000000000042000000000000000000000000000000000000060000000000000000000000004ed4e862860bed51a9570b96d89af5e1b0efefed00000000000000000000000000000000000000000000000000000000000000600000000000000000000000004ed4e862860bed51a9570b96d89af5e1b0efefed0000000000000000000000005d64d14d2cf4fe5fe4e65b1c7e3d11e18d49309100000000000000000000000000000000000000000000000003782dace9d9000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000004ed4e862860bed51a9570b96d89af5e1b0efefed0000000000000000000000008349fc69c48af23e030a655736375d8942de53470000000000000000000000000000000000000000000000056bc75e2d6310000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000008349fc69c48af23e030a655736375d8942de534700000000000000000000000000000000000000000000000000000000000000000c</ts:parameter>
+            <ts:parameter name="additionalData" type="bytes[]"></ts:parameter>
+            <ts:parameter name="value" type="uint256">0</ts:parameter>
+        </ts:parameters>
+    </ts:transaction>
+
+    <ts:attribute name="balance">
+        <ts:type>
+            <ts:syntax>1.3.6.1.4.1.1466.115.121.1.36</ts:syntax>
+        </ts:type>
+        <ts:label>
+            <ts:string xml:lang="en">Balance</ts:string>
+        </ts:label>
+        <ts:origins>
+            <ethereum:call function="balanceOf" contract="DegenTokenContract" as="uint">
+                <ethereum:parameter name="owner" ref="ownerAddress"/>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+
+    <ts:script>
+    <![CDATA[
+    tokenscript.tokens.dataChanged = async (oldTokens, updatedTokens) => {
+        console.log("TokenScript data changed", updatedTokens);
+    };
+    ]]>
+    </ts:script>
+</ts:token>

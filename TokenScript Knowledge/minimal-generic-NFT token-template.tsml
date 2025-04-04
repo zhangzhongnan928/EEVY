@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
+          xmlns:xml="http://www.w3.org/XML/1998/namespace"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:ethereum="urn:ethereum:constantinople"
+          name="GenericToken"> <!-- 注释：更改此处以修改Tapp名称 / Change this to modify the Tapp name -->
+    <ts:label>
+        <ts:plurals xml:lang="en">
+            <ts:string quantity="one">Generic Token</ts:string> <!-- 注释：更改此处以修改Tapp的单数名称 / Change this to modify the singular name of the Tapp -->
+            <ts:string quantity="other">Generic Tokens</ts:string> <!-- 注释：更改此处以修改Tapp的复数名称 / Change this to modify the plural name of the Tapp -->
+        </ts:plurals>
+    </ts:label>
+    <ts:meta>
+        <ts:description xml:lang="en">A generic token template</ts:description> <!-- 注释：更改此处以修改Tapp描述 / Change this to modify the Tapp description -->
+        <ts:aboutUrl xml:lang="en">https://example.com</ts:aboutUrl> <!-- 注释：更改此处以修改Tapp的相关网址 / Change this to modify the Tapp's related website -->
+        <ts:iconUrl xml:lang="en">https://example.com/icon.png</ts:iconUrl> <!-- 注释：更改此处以修改Tapp的图标URL / Change this to modify the Tapp's icon URL -->
+    </ts:meta>
+    <ts:contract interface="erc721" name="GenericTokenContract"> <!-- 注释：如需要，更改此处的接口类型（如erc20） / If needed, change the interface type here (e.g., erc20) -->
+        <ts:address network="8453">0x6F418b21aabe625192577De7720b4D27297Beb92</ts:address> <!-- 注释：更改此处以修改链ID和合约地址 / Change this to modify the chain ID and contract address -->
+    </ts:contract>
+    <ts:origins>
+        <ts:ethereum contract="GenericTokenContract"/>
+    </ts:origins>
+    <ts:cards>
+        <ts:card type="action" name="FunctionA"> <!-- 注释：更改此处以修改功能A的名称 / Change this to modify the name of Function A -->
+            <ts:label>
+                <ts:string xml:lang="en">Function A</ts:string> <!-- 注释：更改此处以修改功能A的显示名称 / Change this to modify the display name of Function A -->
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <button>Function A</button> <!-- 注释：更改此处以修改功能A的按钮文本 / Change this to modify the button text for Function A -->
+            </ts:view>
+        </ts:card>
+
+        <ts:card type="action" name="FunctionB"> <!-- 注释：更改此处以修改功能B的名称 / Change this to modify the name of Function B -->
+            <ts:label>
+                <ts:string xml:lang="en">Function B</ts:string> <!-- 注释：更改此处以修改功能B的显示名称 / Change this to modify the display name of Function B -->
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <button>Function B</button> <!-- 注释：更改此处以修改功能B的按钮文本 / Change this to modify the button text for Function B -->
+            </ts:view>
+        </ts:card>
+
+        <ts:card type="action" name="FunctionC"> <!-- 注释：更改此处以修改功能C的名称 / Change this to modify the name of Function C -->
+            <ts:label>
+                <ts:string xml:lang="en">Function C</ts:string> <!-- 注释：更改此处以修改功能C的显示名称 / Change this to modify the display name of Function C -->
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <button>Function C</button> <!-- 注释：更改此处以修改功能C的按钮文本 / Change this to modify the button text for Function C -->
+            </ts:view>
+        </ts:card>
+    </ts:cards>
+</ts:token>

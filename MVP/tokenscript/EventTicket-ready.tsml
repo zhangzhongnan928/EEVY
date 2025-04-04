@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
+          xmlns:xml="http://www.w3.org/XML/1998/namespace"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:ethereum="urn:ethereum:constantinople"
+          name="EEVY Event Ticket">
+    <ts:label>
+        <ts:plurals xml:lang="en">
+            <ts:string quantity="one">EEVY Event Ticket</ts:string>
+            <ts:string quantity="other">EEVY Event Tickets</ts:string>
+        </ts:plurals>
+    </ts:label>
+    <ts:meta>
+        <ts:description xml:lang="en">A ticket for an event on the EEVY platform</ts:description>
+        <ts:aboutUrl xml:lang="en">https://eevy.xyz</ts:aboutUrl>
+        <ts:iconUrl xml:lang="en">https://example.com/icon.png</ts:iconUrl>
+    </ts:meta>
+    <ts:contract interface="erc721" name="EventTicketContract">
+        <!-- Replace this with the actual event contract address once created -->
+        <ts:address network="8453">0x0000000000000000000000000000000000000000</ts:address>
+    </ts:contract>
+    <ts:origins>
+        <ts:ethereum contract="EventTicketContract"/>
+    </ts:origins>
+    
+    <!-- Attributes from the contract -->
+    <ts:attribute name="eventName">
+        <ts:label>
+            <ts:string xml:lang="en">Event Name</ts:string>
+        </ts:label>
+        <ts:origins>
+            <ethereum:call function="eventInfo" as="tuple">
+                <ts:returnType>
+                    <ts:type>string</ts:type>
+                    <ts:name>name</ts:name>
+                </ts:returnType>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+    
+    <ts:attribute name="eventDate">
+        <ts:label>
+            <ts:string xml:lang="en">Event Date</ts:string>
+        </ts:label>
+        <ts:origins>
+            <ethereum:call function="eventInfo" as="tuple">
+                <ts:returnType>
+                    <ts:type>uint</ts:type>
+                    <ts:name>date</ts:name>
+                </ts:returnType>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+    
+    <ts:attribute name="venue">
+        <ts:label>
+            <ts:string xml:lang="en">Venue</ts:string>
+        </ts:label>
+        <ts:origins>
+            <ethereum:call function="eventInfo" as="tuple">
+                <ts:returnType>
+                    <ts:type>string</ts:type>
+                    <ts:name>venue</ts:name>
+                </ts:returnType>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+    
+    <ts:attribute name="ticketUsed">
+        <ts:label>
+            <ts:string xml:lang="en">Ticket Used</ts:string>
+        </ts:label>
+        <ts:origins>
+            <ethereum:call function="ticketUsed" as="bool">
+                <ts:int ref="tokenId"/>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+    
+    <!-- Cards -->
+    <ts:cards>
+        <!-- Ticket Information Card -->
+        <ts:card type="action" name="ticketInfo">
+            <ts:label>
+                <ts:string xml:lang="en">Ticket Information</ts:string>
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <style>
+                    .ticket-card {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        background: linear-gradient(135deg, #6e8efb, #a777e3);
+                        color: white;
+                        font-family: 'Arial', sans-serif;
+                    }
+                    .ticket-header {
+                        font-size: 24px;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                    }
+                    .ticket-info {
+                        margin: 5px 0;
+                    }
+                    .qr-container {
+                        align-self: center;
+                        margin: 20px 0;
+                        padding: 15px;
+                        background: white;
+                        border-radius: 8px;
+                    }
+                </style>
+                <div class="ticket-card">
+                    <div class="ticket-header">
+                        <span>Event Ticket</span>
+                    </div>
+                    <div class="ticket-info">
+                        <strong>Event:</strong> <span id="eventName"></span>
+                    </div>
+                    <div class="ticket-info">
+                        <strong>Date:</strong> <span id="eventDate"></span>
+                    </div>
+                    <div class="ticket-info">
+                        <strong>Venue:</strong> <span id="venue"></span>
+                    </div>
+                    <div class="ticket-info">
+                        <strong>Status:</strong> <span id="ticketStatus"></span>
+                    </div>
+                    <div class="qr-container">
+                        <div id="qrcode"></div>
+                    </div>
+                </div>
+                
+                <script type="text/javascript">
+                    // When data is loaded from the token
+                    tokenscript.tokens.dataChanged = (oldTokens, updatedTokens) => {
+                        const ticket = updatedTokens.currentInstance;
+                        if (!ticket) return;
+                        
+                        // Update ticket information
+                        document.getElementById('eventName').textContent = ticket.eventName;
+                        document.getElementById('venue').textContent = ticket.venue;
+                        
+                        // Format date
+                        const eventDate = new Date(ticket.eventDate * 1000);
+                        document.getElementById('eventDate').textContent = eventDate.toLocaleString();
+                        
+                        // Update ticket status
+                        const statusElement = document.getElementById('ticketStatus');
+                        if (ticket.ticketUsed) {
+                            statusElement.textContent = 'Used';
+                            statusElement.style.color = 'red';
+                        } else {
+                            statusElement.textContent = 'Valid';
+                            statusElement.style.color = 'green';
+                        }
+                        
+                        // Generate QR code with wallet address and token ID for verification
+                        generateQRCode();
+                    };
+                    
+                    function generateQRCode() {
+                        const walletAddress = tokenscript.ethereum.selectedAddress;
+                        const tokenId = tokenscript.tokens.currentInstance.id;
+                        const currentTime = Math.floor(Date.now() / 1000);
+                        
+                        // QR code content includes wallet address, token ID, and timestamp
+                        const qrContent = JSON.stringify({
+                            wallet: walletAddress,
+                            token: tokenId,
+                            timestamp: currentTime
+                        });
+                        
+                        // Use a QR code library to generate the code
+                        // In a real implementation, we would use a proper QR library
+                        document.getElementById('qrcode').textContent = 'QR Code will appear here';
+                    }
+                </script>
+            </ts:view>
+        </ts:card>
+        
+        <!-- Use Ticket Card (validation) -->
+        <ts:card type="action" name="useTicket">
+            <ts:label>
+                <ts:string xml:lang="en">Use Ticket</ts:string>
+            </ts:label>
+            <ts:transaction>
+                <ethereum:transaction function="useTicket" contract="EventTicketContract" as="bool">
+                    <ts:int ref="tokenId"/>
+                </ethereum:transaction>
+            </ts:transaction>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <style>
+                    .use-ticket-card {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        background: white;
+                        font-family: 'Arial', sans-serif;
+                    }
+                    .button {
+                        padding: 10px 20px;
+                        background: linear-gradient(135deg, #6e8efb, #a777e3);
+                        border: none;
+                        border-radius: 5px;
+                        color: white;
+                        font-weight: bold;
+                        cursor: pointer;
+                        align-self: center;
+                        margin-top: 20px;
+                    }
+                    .warning {
+                        color: red;
+                        font-weight: bold;
+                        margin-top: 10px;
+                        text-align: center;
+                    }
+                </style>
+                <div class="use-ticket-card">
+                    <h3>Use Your Ticket</h3>
+                    <p>Clicking the button below will mark your ticket as used and cannot be undone.</p>
+                    <p>This should only be done when you are at the event entrance.</p>
+                    <div class="warning" id="usedWarning" style="display: none;">
+                        This ticket has already been used!
+                    </div>
+                    <button class="button" id="useTicketButton">Use Ticket</button>
+                </div>
+                
+                <script type="text/javascript">
+                    tokenscript.tokens.dataChanged = (oldTokens, updatedTokens) => {
+                        const ticket = updatedTokens.currentInstance;
+                        if (!ticket) return;
+                        
+                        // Check if ticket is already used
+                        const useTicketButton = document.getElementById('useTicketButton');
+                        const usedWarning = document.getElementById('usedWarning');
+                        
+                        if (ticket.ticketUsed) {
+                            useTicketButton.disabled = true;
+                            useTicketButton.style.opacity = 0.5;
+                            usedWarning.style.display = 'block';
+                        } else {
+                            useTicketButton.disabled = false;
+                            useTicketButton.style.opacity = 1;
+                            usedWarning.style.display = 'none';
+                        }
+                    };
+                    
+                    document.getElementById('useTicketButton').addEventListener('click', () => {
+                        // The action will trigger the transaction defined in ts:transaction
+                        tokenscript.sendAction('useTicket');
+                    });
+                </script>
+            </ts:view>
+        </ts:card>
+    </ts:cards>
+</ts:token> 

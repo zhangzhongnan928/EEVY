@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
+          xmlns:ethereum="urn:ethereum:constantinople"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
+          name="CelebrityMembershipCard">
+    <ts:label>
+        <ts:plurals xml:lang="en">
+            <ts:string quantity="one">Celebrity Membership Card</ts:string>
+            <ts:string quantity="other">Celebrity Membership Cards</ts:string>
+        </ts:plurals>
+    </ts:label>
+    <ts:meta>
+        <ts:description xml:lang="en">Official Membership Card - Access exclusive content and benefits</ts:description>
+        <ts:aboutUrl xml:lang="en">https://mingxing.xxx.com/about</ts:aboutUrl>
+        <ts:iconUrl xml:lang="en">https://mingxing.xxx.com/icon.png</ts:iconUrl>
+    </ts:meta>
+
+    <ts:contract interface="erc721" name="MembershipCardContract">
+        <ts:address network="1">0x8c9f4468ae04fb3d79c80f6eacf0e4e1dd21deee</ts:address>
+    </ts:contract>
+
+    <ts:origins>
+        <ts:ethereum contract="MembershipCardContract"/>
+    </ts:origins>
+
+    <ts:cards>
+        <ts:card type="action" name="ExclusiveContent">
+            <ts:label>
+                <ts:string xml:lang="en">Exclusive Content</ts:string>
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <style>
+                    .card-container {
+                        font-family: 'Rubik', sans-serif;
+                        background: linear-gradient(135deg, #6e8efb, #a777e3);
+                        border-radius: 16px;
+                        padding: 20px;
+                        color: white;
+                        text-align: center;
+                        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                        max-width: 400px;
+                        margin: 0 auto;
+                    }
+                    .card-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                    }
+                    .card-logo {
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                        background-color: white;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .card-title {
+                        font-size: 24px;
+                        font-weight: bold;
+                    }
+                    .card-level {
+                        font-size: 18px;
+                        margin-bottom: 15px;
+                    }
+                    .card-member-info {
+                        background-color: rgba(255,255,255,0.2);
+                        border-radius: 8px;
+                        padding: 10px;
+                        margin-bottom: 20px;
+                    }
+                    .card-qr {
+                        background-color: white;
+                        width: 120px;
+                        height: 120px;
+                        margin: 0 auto 20px;
+                        border-radius: 8px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .card-actions {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 10px;
+                        margin-bottom: 20px;
+                    }
+                    .action-button {
+                        background-color: rgba(255,255,255,0.25);
+                        border: none;
+                        border-radius: 8px;
+                        padding: 12px;
+                        color: white;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: background-color 0.3s;
+                    }
+                    .action-button:hover {
+                        background-color: rgba(255,255,255,0.4);
+                    }
+                    .card-footer {
+                        font-size: 12px;
+                        opacity: 0.8;
+                    }
+                </style>
+                
+                <div class="card-container">
+                    <div class="card-header">
+                        <div class="card-logo">
+                            <img src="https://mingxing.xxx.com/logo.png" alt="Logo" width="40" height="40" />
+                        </div>
+                        <div class="card-title">VIP Membership</div>
+                    </div>
+                    
+                    <div class="card-level">Gold Level</div>
+                    
+                    <div class="card-member-info">
+                        <div>Member #<span id="memberId">12345</span></div>
+                        <div>Joined: <span id="joinDate">June 15, 2024</span></div>
+                    </div>
+                    
+                    <div class="card-qr">
+                        <img src="https://mingxing.xxx.com/qr-placeholder.png" alt="QR Code" width="100" height="100" />
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button class="action-button" onclick="window.location.href='https://mingxing.xxx.com/content'">Exclusive Content</button>
+                        <button class="action-button" onclick="window.location.href='https://mingxing.xxx.com/events'">Events</button>
+                        <button class="action-button" onclick="window.location.href='https://mingxing.xxx.com/rewards'">Rewards</button>
+                        <button class="action-button" onclick="window.location.href='https://mingxing.xxx.com/community'">Community</button>
+                        <button class="action-button" onclick="window.location.href='https://mingxing.xxx.com/ai-chat'">AI Chat</button>
+                        <button class="action-button" onclick="window.location.href='https://mingxing.zhoubian.com'">Merchandise</button>
+                    </div>
+                    
+                    <div class="card-footer">
+                        Powered by TokenScript Technology
+                    </div>
+                </div>
+                
+                <script>
+                    // This would be populated with actual data in a real implementation
+                    document.getElementById('memberId').textContent = '12345';
+                    document.getElementById('joinDate').textContent = 'June 15, 2024';
+                </script>
+            </ts:view>
+        </ts:card>
+    </ts:cards>
+
+    <ts:attribute name="membershipLevel">
+        <ts:type>
+            <ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+        </ts:type>
+        <ts:origins>
+            <ethereum:call function="getMembershipLevel" contract="MembershipCardContract" as="string">
+                <ethereum:parameter name="tokenId" ref="tokenId"/>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+
+    <ts:attribute name="joinDate">
+        <ts:type>
+            <ts:syntax>1.3.6.1.4.1.1466.115.121.1.24</ts:syntax>
+        </ts:type>
+        <ts:origins>
+            <ethereum:call function="getJoinDate" contract="MembershipCardContract" as="uint">
+                <ethereum:parameter name="tokenId" ref="tokenId"/>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+
+    <ts:script>
+    <![CDATA[
+    tokenscript.tokens.dataChanged = async (oldTokens, updatedTokens) => {
+        console.log("TokenScript data changed", updatedTokens);
+        if (updatedTokens.currentInstance) {
+            window.tokenId = updatedTokens.currentInstance.tokenId;
+            window.membershipLevel = updatedTokens.currentInstance.membershipLevel;
+            window.joinDate = updatedTokens.currentInstance.joinDate;
+            
+            // Update UI with the new data
+            if (document.getElementById('memberId')) {
+                document.getElementById('memberId').textContent = window.tokenId;
+            }
+            
+            const joinDateObj = new Date(window.joinDate * 1000);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = joinDateObj.toLocaleDateString('en-US', options);
+            
+            if (document.getElementById('joinDate')) {
+                document.getElementById('joinDate').textContent = formattedDate;
+            }
+        }
+    };
+    ]]>
+    </ts:script>
+</ts:token>

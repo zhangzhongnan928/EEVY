@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
+          xmlns:ethereum="urn:ethereum:constantinople"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
+          name="CelebrityMerchandise">
+    <ts:label>
+        <ts:plurals xml:lang="en">
+            <ts:string quantity="one">Limited Edition Merchandise</ts:string>
+            <ts:string quantity="other">Limited Edition Merchandise</ts:string>
+        </ts:plurals>
+    </ts:label>
+    <ts:meta>
+        <ts:description xml:lang="en">Official Limited Edition Merchandise - Authentic and Collectible</ts:description>
+        <ts:aboutUrl xml:lang="en">https://mingxing.zhoubian.com/about</ts:aboutUrl>
+        <ts:iconUrl xml:lang="en">https://mingxing.zhoubian.com/icon.png</ts:iconUrl>
+    </ts:meta>
+
+    <ts:contract interface="erc721" name="MerchandiseContract">
+        <ts:address network="1">0x9d4f8e2b07dc9979a5e8bd1b7bf9af8dea9d34c2</ts:address>
+    </ts:contract>
+
+    <ts:origins>
+        <ts:ethereum contract="MerchandiseContract"/>
+    </ts:origins>
+
+    <ts:cards>
+        <ts:card type="action" name="MerchandiseDetails">
+            <ts:label>
+                <ts:string xml:lang="en">Merchandise Details</ts:string>
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <style>
+                    .merch-container {
+                        font-family: 'Rubik', sans-serif;
+                        background: linear-gradient(135deg, #ff9966, #ff5e62);
+                        border-radius: 16px;
+                        padding: 20px;
+                        color: white;
+                        text-align: center;
+                        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                        max-width: 400px;
+                        margin: 0 auto;
+                    }
+                    .merch-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                    }
+                    .merch-logo {
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                        background-color: white;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .merch-title {
+                        font-size: 24px;
+                        font-weight: bold;
+                    }
+                    .merch-subtitle {
+                        font-size: 18px;
+                        margin-bottom: 15px;
+                    }
+                    .merch-image {
+                        width: 200px;
+                        height: 200px;
+                        margin: 0 auto 20px;
+                        border-radius: 8px;
+                        overflow: hidden;
+                    }
+                    .merch-image img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                    .merch-info {
+                        background-color: rgba(255,255,255,0.2);
+                        border-radius: 8px;
+                        padding: 10px;
+                        margin-bottom: 20px;
+                        text-align: left;
+                    }
+                    .merch-info-row {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 5px;
+                    }
+                    .merch-actions {
+                        display: grid;
+                        grid-template-columns: 1fr;
+                        gap: 10px;
+                        margin-bottom: 20px;
+                    }
+                    .action-button {
+                        background-color: rgba(255,255,255,0.25);
+                        border: none;
+                        border-radius: 8px;
+                        padding: 12px;
+                        color: white;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: background-color 0.3s;
+                    }
+                    .action-button:hover {
+                        background-color: rgba(255,255,255,0.4);
+                    }
+                    .merch-footer {
+                        font-size: 12px;
+                        opacity: 0.8;
+                    }
+                </style>
+                
+                <div class="merch-container">
+                    <div class="merch-header">
+                        <div class="merch-logo">
+                            <img src="https://mingxing.zhoubian.com/logo.png" alt="Logo" width="40" height="40" />
+                        </div>
+                        <div class="merch-title">Limited Edition</div>
+                    </div>
+                    
+                    <div class="merch-subtitle">Exclusive Signed T-Shirt</div>
+                    
+                    <div class="merch-image">
+                        <img src="https://mingxing.zhoubian.com/tshirt-placeholder.jpg" alt="T-Shirt" />
+                    </div>
+                    
+                    <div class="merch-info">
+                        <div class="merch-info-row">
+                            <span>Item #:</span>
+                            <span id="itemId">78901</span>
+                        </div>
+                        <div class="merch-info-row">
+                            <span>Edition:</span>
+                            <span id="edition">42/100</span>
+                        </div>
+                        <div class="merch-info-row">
+                            <span>Purchased:</span>
+                            <span id="purchaseDate">July 10, 2024</span>
+                        </div>
+                        <div class="merch-info-row">
+                            <span>Status:</span>
+                            <span id="status">Available</span>
+                        </div>
+                    </div>
+                    
+                    <div class="merch-actions">
+                        <button class="action-button" onclick="window.location.href='https://mingxing.zhoubian.com/resell'">Resell Item</button>
+                        <button class="action-button" onclick="window.location.href='https://mingxing.zhoubian.com/redeem'">Redeem Physical Item</button>
+                        <button class="action-button" onclick="window.location.href='https://mingxing.zhoubian.com/refund'">Request Refund</button>
+                    </div>
+                    
+                    <div class="merch-footer">
+                        Authenticity verified by TokenScript Technology
+                    </div>
+                </div>
+                
+                <script>
+                    // This would be populated with actual data in a real implementation
+                    document.getElementById('itemId').textContent = '78901';
+                    document.getElementById('edition').textContent = '42/100';
+                    document.getElementById('purchaseDate').textContent = 'July 10, 2024';
+                    document.getElementById('status').textContent = 'Available';
+                </script>
+            </ts:view>
+        </ts:card>
+    </ts:cards>
+
+    <ts:attribute name="itemType">
+        <ts:type>
+            <ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+        </ts:type>
+        <ts:origins>
+            <ethereum:call function="getItemType" contract="MerchandiseContract" as="string">
+                <ethereum:parameter name="tokenId" ref="tokenId"/>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+
+    <ts:attribute name="edition">
+        <ts:type>
+            <ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+        </ts:type>
+        <ts:origins>
+            <ethereum:call function="getEdition" contract="MerchandiseContract" as="string">
+                <ethereum:parameter name="tokenId" ref="tokenId"/>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+
+    <ts:attribute name="purchaseDate">
+        <ts:type>
+            <ts:syntax>1.3.6.1.4.1.1466.115.121.1.24</ts:syntax>
+        </ts:type>
+        <ts:origins>
+            <ethereum:call function="getPurchaseDate" contract="MerchandiseContract" as="uint">
+                <ethereum:parameter name="tokenId" ref="tokenId"/>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+
+    <ts:attribute name="status">
+        <ts:type>
+            <ts:syntax>1.3.6.1.4.1.1466.115.121.1.15</ts:syntax>
+        </ts:type>
+        <ts:origins>
+            <ethereum:call function="getStatus" contract="MerchandiseContract" as="string">
+                <ethereum:parameter name="tokenId" ref="tokenId"/>
+            </ethereum:call>
+        </ts:origins>
+    </ts:attribute>
+
+    <ts:script>
+    <![CDATA[
+    tokenscript.tokens.dataChanged = async (oldTokens, updatedTokens) => {
+        console.log("TokenScript data changed", updatedTokens);
+        if (updatedTokens.currentInstance) {
+            window.tokenId = updatedTokens.currentInstance.tokenId;
+            window.itemType = updatedTokens.currentInstance.itemType;
+            window.edition = updatedTokens.currentInstance.edition;
+            window.purchaseDate = updatedTokens.currentInstance.purchaseDate;
+            window.status = updatedTokens.currentInstance.status;
+            
+            // Update UI with the new data
+            if (document.getElementById('itemId')) {
+                document.getElementById('itemId').textContent = window.tokenId;
+            }
+            
+            if (document.getElementById('edition')) {
+                document.getElementById('edition').textContent = window.edition;
+            }
+            
+            const purchaseDateObj = new Date(window.purchaseDate * 1000);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = purchaseDateObj.toLocaleDateString('en-US', options);
+            
+            if (document.getElementById('purchaseDate')) {
+                document.getElementById('purchaseDate').textContent = formattedDate;
+            }
+            
+            if (document.getElementById('status')) {
+                document.getElementById('status').textContent = window.status;
+            }
+        }
+    };
+    ]]>
+    </ts:script>
+</ts:token>

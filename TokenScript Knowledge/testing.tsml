@@ -1,0 +1,70 @@
+<TokenScript xmlns="http://tokenscript.org/2021/04/tokenscript" schemaVersion="2024/02" name="NFTSharingTapp">
+    <ts:meta>
+        <ts:name>Twitter NFT Sharing</ts:name>
+        <ts:version>1.0</ts:version>
+        <ts:author>Tapp Product Manager</ts:author>
+        <ts:description>
+            A tapp that allows users to share their NFTs on Twitter with a purchase link to OpenSea.
+        </ts:description>
+        <ts:contract network="1" type="ERC721">
+            <ts:address>0x123456789...NFTContractAddress</ts:address>
+        </ts:contract>
+    </ts:meta>
+    
+    <!-- Attributes -->
+    <ts:attributes>
+        <attribute-type id="nftName" type="string">
+            <ts:name>Token Name</ts:name>
+            <ts:origin>blockchain</ts:origin>
+            <ts:contract>0x123456789...NFTContractAddress</ts:contract>
+            <ts:selector>name</ts:selector>
+        </attribute-type>
+        
+        <attribute-type id="nftImage" type="image">
+            <ts:name>Token Image</ts:name>
+            <ts:origin>blockchain</ts:origin>
+            <ts:contract>0x123456789...NFTContractAddress</ts:contract>
+            <ts:selector>image</ts:selector>
+        </attribute-type>
+        
+        <attribute-type id="nftDescription" type="string">
+            <ts:name>Token Description</ts:name>
+            <ts:origin>blockchain</ts:origin>
+            <ts:contract>0x123456789...NFTContractAddress</ts:contract>
+            <ts:selector>description</ts:selector>
+        </attribute-type>
+        
+        <attribute-type id="nftPrice" type="number">
+            <ts:name>Token Price</ts:name>
+            <ts:origin>openSea</ts:origin>
+            <ts:contract>0xABCDEF...OpenSeaContractAddress</ts:contract>
+            <ts:selector>price</ts:selector>
+        </attribute-type>
+    </ts:attributes>
+    
+    <!-- Actions -->
+    <ts:actions>
+        <!-- Share NFT on Twitter -->
+        <ts:action id="shareOnTwitter">
+            <ts:name>Share on Twitter</ts:name>
+            <ts:description>
+                This action allows you to share your NFT on Twitter with a purchase link to OpenSea.
+            </ts:description>
+            <ts:transaction>
+                <ts:contract>0xABCDEF...OpenSeaContractAddress</ts:contract>
+                <ts:method>getNFTMetadata</ts:method>
+            </ts:transaction>
+            <ts:user-interface>
+                <input id="twitterMessage" label="Message to Share" type="text" />
+                <button label="Share on Twitter" id="twitterButton" action="postToTwitter" />
+            </ts:user-interface>
+        </ts:action>
+    </ts:actions>
+
+    <!-- UI Elements -->
+    <ts:user-interface>
+        <input id="selectNFT" label="Select NFT to Share" type="dropdown" from="attributes.nftName"/>
+        <output id="nftPreview" label="NFT Preview" type="image" source="attributes.nftImage"/>
+        <button label="Generate Tlink & Share" id="generateTlink" action="shareOnTwitter" />
+    </ts:user-interface>
+</TokenScript>

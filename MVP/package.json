@@ -1,0 +1,13 @@
+{
+  "name": "eevy-mvp",
+  "version": "0.1.0",
+  "description": "A minimal viable product for an event ticket platform based on smart contracts and TokenScript",
+  "scripts": {
+    "compile": "solcjs --bin --abi --include-path node_modules/ --base-path . -o ./build MVP/contracts/*.sol",
+    "deploy:factory": "echo \"Deploy script would go here\""
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "ethers": "^6.9.0"
+  }
+} 

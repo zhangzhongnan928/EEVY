@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ts:token xmlns:ts="http://tokenscript.org/2024/01/tokenscript"
+          xmlns:xml="http://www.w3.org/XML/1998/namespace"
+          xsi:schemaLocation="http://tokenscript.org/2024/01/tokenscript https://www.tokenscript.org/schemas/2024-01/tokenscript.xsd"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:ethereum="urn:ethereum:constantinople"
+          name="GenericERC20Token"> <!-- 注释：更改此处以修改Tapp名称 / Change this to modify the Tapp name -->
+    <ts:label>
+        <ts:plurals xml:lang="en">
+            <ts:string quantity="one">Generic ERC20 Token</ts:string> <!-- 注释：更改此处以修改Tapp的单数名称 / Change this to modify the singular name of the Tapp -->
+            <ts:string quantity="other">Generic ERC20 Tokens</ts:string> <!-- 注释：更改此处以修改Tapp的复数名称 / Change this to modify the plural name of the Tapp -->
+        </ts:plurals>
+    </ts:label>
+    <ts:meta>
+        <ts:description xml:lang="en">A generic ERC20 token template</ts:description> <!-- 注释：更改此处以修改Tapp描述 / Change this to modify the Tapp description -->
+        <ts:aboutUrl xml:lang="en">https://example.com</ts:aboutUrl> <!-- 注释：更改此处以修改Tapp的相关网址 / Change this to modify the Tapp's related website -->
+        <ts:iconUrl xml:lang="en">https://example.com/icon.png</ts:iconUrl> <!-- 注释：更改此处以修改Tapp的图标URL / Change this to modify the Tapp's icon URL -->
+    </ts:meta>
+    <ts:contract interface="erc20" name="GenericERC20Contract"> <!-- 注释：ERC20接口类型 / ERC20 interface type -->
+        <ts:address network="137">0x1fe78e67ad10ba3a9583e672cac0480737d1b9f7</ts:address> <!-- 注释：更改此处以修改链ID和合约地址 / Change this to modify the chain ID and contract address -->
+    </ts:contract>
+    <ts:origins>
+        <ts:ethereum contract="GenericERC20Contract"/>
+    </ts:origins>
+    <ts:cards>
+        <ts:card type="action" name="Transfer"> <!-- 注释：更改此处以修改转账功能的名称 / Change this to modify the name of the Transfer function -->
+            <ts:label>
+                <ts:string xml:lang="en">Transfer</ts:string> <!-- 注释：更改此处以修改转账功能的显示名称 / Change this to modify the display name of the Transfer function -->
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <button>Transfer Tokens</button> <!-- 注释：更改此处以修改转账功能的按钮文本 / Change this to modify the button text for the Transfer function -->
+            </ts:view>
+        </ts:card>
+
+        <ts:card type="action" name="Balance"> <!-- 注释：更改此处以修改余额查询功能的名称 / Change this to modify the name of the Balance function -->
+            <ts:label>
+                <ts:string xml:lang="en">Check Balance</ts:string> <!-- 注释：更改此处以修改余额查询功能的显示名称 / Change this to modify the display name of the Balance function -->
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <button>Check Balance</button> <!-- 注释：更改此处以修改余额查询功能的按钮文本 / Change this to modify the button text for the Balance function -->
+            </ts:view>
+        </ts:card>
+
+        <ts:card type="action" name="Approve"> <!-- 注释：更改此处以修改授权功能的名称 / Change this to modify the name of the Approve function -->
+            <ts:label>
+                <ts:string xml:lang="en">Approve Spending</ts:string> <!-- 注释：更改此处以修改授权功能的显示名称 / Change this to modify the display name of the Approve function -->
+            </ts:label>
+            <ts:view xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+                <button>Approve Spending</button> <!-- 注释：更改此处以修改授权功能的按钮文本 / Change this to modify the button text for the Approve function -->
+            </ts:view>
+        </ts:card>
+    </ts:cards>
+    
+    <ts:attribute-types>
+        <ts:attribute-type id="decimals" syntax="1.3.6.1.4.1.1466.115.121.1.36">
+            <ts:name>
+                <ts:string xml:lang="en">decimals</ts:string>
+            </ts:name>
+            <ts:origins>
+                <ethereum:call function="decimals" contract="GenericERC20Contract" as="uint"/>
+            </ts:origins>
+        </ts:attribute-type>
+        <ts:attribute-type id="symbol" syntax="1.3.6.1.4.1.1466.115.121.1.26">
+            <ts:name>
+                <ts:string xml:lang="en">symbol</ts:string>
+            </ts:name>
+            <ts:origins>
+                <ethereum:call function="symbol" contract="GenericERC20Contract" as="utf8"/>
+            </ts:origins>
+        </ts:attribute-type>
+    </ts:attribute-types>
+</ts:token>

@@ -1,0 +1,1 @@
+Tlink is part of tapp framework, it is an url like https://viewer.tokenscript.org/?chain=ChainID&contract=tokenContractAddress#card=<ts:cards>&tokenId=TokenID which is for twitter to rendering the TokenScript in tweet feed with Tlink browser extension(https://chromewebstore.google.com/detail/tlink/eblnpllcmmepkmpaalggpibindkplcjj).
