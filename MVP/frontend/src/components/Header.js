@@ -2,53 +2,76 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-const Header = ({ account, connectWallet, disconnectWallet, isConnecting }) => {
+const Header = ({ 
+  account, 
+  chainId,
+  connectWallet, 
+  disconnectWallet, 
+  testMode,
+  toggleTestMode 
+}) => {
+  // Check if we're on Base Mainnet (8453) or a testnet
+  const isBaseMainnet = chainId === '0x2105'; // 8453 in hex
+  
+  // Format account address for display
   const formatAddress = (address) => {
     if (!address) return '';
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
-
+  
   return (
     <header className="header">
-      <div className="header-content">
-        <div className="header-left">
-          <Link to="/" className="logo">
+      <div className="header-container">
+        <div className="logo">
+          <Link to="/" className="logo-link">
             EEVY
           </Link>
-          <nav className="nav-links">
-            <Link to="/" className="nav-link">
-              Events
-            </Link>
-            <Link to="/create" className="nav-link">
-              Create Event
-            </Link>
-            <Link to="/my-tickets" className="nav-link">
-              My Tickets
-            </Link>
-          </nav>
         </div>
         
-        <div className="header-right">
-          {account ? (
-            <div className="wallet-info">
-              <div className="account-display">
+        <nav className="nav">
+          <Link to="/" className="nav-link">Events</Link>
+          <Link to="/create" className="nav-link">Create Event</Link>
+          {account && (
+            <Link to="/my-tickets" className="nav-link">My Tickets</Link>
+          )}
+        </nav>
+        
+        <div className="wallet-actions">
+          {testMode && (
+            <span className="test-mode-badge">Test Mode</span>
+          )}
+          
+          <button 
+            className="test-mode-toggle"
+            onClick={toggleTestMode}
+          >
+            {testMode ? 'Exit Test Mode' : 'Test Mode'}
+          </button>
+          
+          {!account ? (
+            <button 
+              className="connect-button" 
+              onClick={connectWallet}
+            >
+              Connect Wallet
+            </button>
+          ) : (
+            <div className="account-info">
+              {!isBaseMainnet && (
+                <div className="network-warning">
+                  Not on Base Network
+                </div>
+              )}
+              <span className="account-address">
                 {formatAddress(account)}
-              </div>
+              </span>
               <button 
-                className="btn btn-sm btn-outline" 
+                className="disconnect-button"
                 onClick={disconnectWallet}
               >
                 Disconnect
               </button>
             </div>
-          ) : (
-            <button 
-              className="btn btn-primary" 
-              onClick={connectWallet}
-              disabled={isConnecting}
-            >
-              {isConnecting ? 'Connecting...' : 'Connect Wallet'}
-            </button>
           )}
         </div>
       </div>

@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/EEVY/static/css/main.01e95cae.css",
+    "main.js": "/EEVY/static/js/main.4ddee2ff.js",
+    "index.html": "/EEVY/index.html",
+    "main.01e95cae.css.map": "/EEVY/static/css/main.01e95cae.css.map",
+    "main.4ddee2ff.js.map": "/EEVY/static/js/main.4ddee2ff.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.01e95cae.css",
+    "static/js/main.4ddee2ff.js"
+  ]
+}

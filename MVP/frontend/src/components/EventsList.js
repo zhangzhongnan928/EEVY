@@ -208,7 +208,7 @@ const EventsList = ({ signer, account, eventFactoryAddress, testMode }) => {
     };
     
     fetchEvents();
-  }, [signer, account, eventFactoryAddress, testMode]);
+  }, [signer, account, eventFactoryAddress, testMode, SimplifiedEventTicketABI]);
 
   // Get decimal places and format price correctly based on token
   const formatPrice = (price, paymentToken) => {
